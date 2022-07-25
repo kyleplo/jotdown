@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Jotdown Demo</title>
+    <link rel="stylesheet" href="./bundle.min.css">
+  </head>
+  <body>
+    <h2>Jotdown Demo</h2>
+    <p>Jotdown on: <a href="https://github.com/kyleplo/jotdown">Github</a> <a href="https://www.npmjs.com/package/@kyleplo/jotdown">NPM</a></p>
+    <p id="inlineMenu"></p>
+    <p id="blockMenu"></p>
+    <div id="editor"></div>
+    <script src="./bundle.min.js"></script>
+    <script defer>
+      var editor;
+      const inlineFormats = {
+        "B": jotdown.bold,
+        "I": jotdown.italic,
+        "CODE": jotdown.code,
+        "A": jotdown.link,
+        "IMG": jotdown.image,
+      }
+      const blockFormats = {
+        "Q": jotdown.blockquote,
+        "PRE": jotdown.codeIndent,
+        "H1": jotdown.heading.h1,
+        "H2": jotdown.heading.h2,
+        "H3": jotdown.heading.h3,
+        "H4": jotdown.heading.h4,
+        "H5": jotdown.heading.h5,
+        "H6": jotdown.heading.h6,
+        "OL": jotdown.orderedList,
+        "UL": jotdown.unorderedList,
+        "HR": jotdown.rule
+      }
+
+      window.addEventListener("load", () => {
+        Object.keys(inlineFormats).forEach(format => {
+          const button = document.createElement("BUTTON");
+          button.textContent = format;
+          button.addEventListener("click", e => {
+            if(e.target.getAttribute("data-active")){
+              editor.removeInlineFormat(inlineFormats[format]);
+            }else{
+              editor.applyInlineFormat(inlineFormats[format]);
+            }
+          });
+          button.id = format;
+          document.querySelector("#inlineMenu").append(button);
+        });
+
+        Object.keys(blockFormats).forEach(format => {
+          const button = document.createElement("BUTTON");
+          button.textContent = format;
+          button.addEventListener("click", e => {
+            if(e.target.getAttribute("data-active")){
+              editor.removeBlockFormat(blockFormats[format]);
+            }else{
+              editor.applyBlockFormat(blockFormats[format]);
+            }
+          });
+          button.id = format;
+          document.querySelector("#blockMenu").append(button);
+        });
+
+        editor = new jotdown.JotDown(document.querySelector("#editor"), {
+          inlineFormats: [jotdown.bold, jotdown.code, jotdown.image, jotdown.italic, jotdown.link],
+          blockFormats: [jotdown.blockquote, jotdown.codeIndent, jotdown.heading.h6, jotdown.heading.h5, jotdown.heading.h4, jotdown.heading.h3, jotdown.heading.h2, jotdown.heading.h1, jotdown.rule, jotdown.orderedList, jotdown.unorderedList]
+        });
+
+        editor.addEventListener("selectionchange", () => {
+          Object.keys(inlineFormats).forEach(format => {
+            if(editor.detectFormat(inlineFormats[format])){
+              document.querySelector("#" + format).setAttribute("data-active", "data-active");
+              document.querySelector("#" + format).style.backgroundColor = "blue";
+            }else{
+              document.querySelector("#" + format).removeAttribute("data-active");
+              document.querySelector("#" + format).style.backgroundColor = null;
+            }
+          });
+
+          Object.keys(blockFormats).forEach(format => {
+            if(editor.detectFormat(blockFormats[format])){
+              document.querySelector("#" + format).setAttribute("data-active", "data-active");
+              document.querySelector("#" + format).style.backgroundColor = "blue";
+            }else{
+              document.querySelector("#" + format).removeAttribute("data-active");
+              document.querySelector("#" + format).style.backgroundColor = null;
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
