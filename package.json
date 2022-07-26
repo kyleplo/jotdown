@@ -1,6 +1,6 @@
 {
   "name": "@kyleplo/jotdown",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Light, minimal markdown editor for the web. Live preview, but not WYSIWYG.",
   "keywords": [
     "markdown",
@@ -22,7 +22,8 @@
   },
   "files": [
     "build/bundle.esm.min.js",
-    "build/bundle.umd.min.js"
+    "build/bundle.umd.min.js",
+    "build/bundle.min.css"
   ],
   "repository": {
     "type": "git",

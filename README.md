@@ -11,7 +11,7 @@ npm install --save @kyleplo/jotdown
 ```
 
 ## Importing
-This library supports usage as both an ES6 module and a CommonJS module, as well as in the browser.
+This library supports usage as both an ES6 module and a CommonJS module, as directly as in the browser.
 
 ## ES6
 ```js
@@ -23,11 +23,18 @@ import { JotDown, bold, italic } from "@kyleplo/jotdown"
 const { JotDown, bold, italic } = require("@kyleplo/jotdown");
 ```
 
+## CSS
+Whether you use ES modules or CommonJS, make sure you also include the CSS bundle.
+```html
+<link rel="stylesheet" href="./node_modules/@kyleplo/jotdown/build/bundle.min.css">
+```
+
 ## Browser
 ```html
 <script src="https://gh.kyleplo.com/jotdown/bundle.min.js" defer></script>
+<link rel="stylesheet" href="https://gh.kyleplo.com/jotdown/bundle.min.css">
 ```
-Or host bundle.min.js yourself.
+Or host bundle.min.js and bundle.min.css yourself.
 
 ## Usage
 Initialize the editor
