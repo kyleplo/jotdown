@@ -60,6 +60,7 @@ export class JotDown extends EventTarget {
 
     this._editor.setRangeText(format.bounds[0][0], this._editor.selectionStart, this._editor.selectionStart);
     this._editor.setRangeText(format.bounds[0][1], this._editor.selectionEnd, this._editor.selectionEnd);
+    super.dispatchEvent(new JotDownChangeEvent());
     super.dispatchEvent(new JotDownSelectionChangeEvent());
 
     this._refresh();
@@ -83,13 +84,13 @@ export class JotDown extends EventTarget {
         if(!successful && this._editor.value.slice(this._editor.selectionStart - bounds[0].length, this._editor.selectionStart) === bounds[0] && this._editor.value.slice(this._editor.selectionEnd, this._editor.selectionEnd + bounds[1].length) === bounds[1]){
           this._editor.setRangeText("", this._editor.selectionStart - bounds[0].length, this._editor.selectionStart);
           this._editor.setRangeText("", this._editor.selectionEnd, this._editor.selectionEnd + bounds[1].length);
-          super.dispatchEvent(new JotDownSelectionChangeEvent());
           successful = true;
         }
       });
     }
 
     if(successful){
+      super.dispatchEvent(new JotDownChangeEvent());
       super.dispatchEvent(new JotDownSelectionChangeEvent());
       this._refresh();
     }
@@ -108,6 +109,7 @@ export class JotDown extends EventTarget {
     }
     i++;
     this._editor.setRangeText(format.triggers[0], i, i);
+    super.dispatchEvent(new JotDownChangeEvent());
     super.dispatchEvent(new JotDownSelectionChangeEvent());
     this._refresh();
     return true;
@@ -127,6 +129,7 @@ export class JotDown extends EventTarget {
       const works = format.detectTrigger(this._editor.value.slice(i, i + this._options.seekMemory));
       if(works){
         this._editor.setRangeText("", i, i + works.length);
+        super.dispatchEvent(new JotDownChangeEvent());
         super.dispatchEvent(new JotDownSelectionChangeEvent());
         this._refresh();
       }
@@ -136,6 +139,7 @@ export class JotDown extends EventTarget {
         const works = this._editor.value.slice(i, i + this._options.seekMemory).startsWith(trigger);
         if(works){
           this._editor.setRangeText("", i, i + trigger.length);
+          super.dispatchEvent(new JotDownChangeEvent());
           super.dispatchEvent(new JotDownSelectionChangeEvent());
           this._refresh();
         }
@@ -314,6 +318,7 @@ export class JotDown extends EventTarget {
           this._editor.setRangeText(continuation, this._editor.selectionEnd, this._editor.selectionEnd);
           setTimeout(() => {
             this._editor.setRangeText(continuation, this._editor.selectionEnd, this._editor.selectionEnd + continuation.length, "end");
+            super.dispatchEvent(new JotDownChangeEvent());
             super.dispatchEvent(new JotDownSelectionChangeEvent());
           }, 100);
           return;
