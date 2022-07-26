@@ -1,0 +1,40 @@
+{
+  "name": "@kyleplo/jotdown",
+  "version": "0.0.1",
+  "description": "Light, minimal markdown editor for the web. Live preview, but not WYSIWYG.",
+  "keywords": [
+    "markdown",
+    "markdown-editor",
+    "text-editor",
+    "editor"
+  ],
+  "homepage": "https://github.com/kyleplo/jotdown#readme",
+  "bugs": "https://github.com/kyleplo/jotdown/issues",
+  "license": "MIT",
+  "author": {
+    "name": "Kyle Plosky",
+    "url": "https://kyleplo.com"
+  },
+  "main": "build/bundle.umd.min.js",
+  "exports": {
+    "import": "./build/bundle.esm.min.js",
+    "require": "./build/bundle.umd.min.js"
+  },
+  "files": [
+    "build/bundle.esm.min.js",
+    "build/bundle.umd.min.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kyleplo/jotdown.git"
+  },
+  "scripts": {
+    "build": "rollup src/jotdown.js --config rollup.config.js && uglifyjs -o build/bundle.esm.min.js build/bundle.esm.js && uglifyjs -o build/bundle.umd.min.js build/bundle.umd.js && uglifycss build/bundle.css --output build/bundle.min.css"
+  },
+  "devDependencies": {
+    "rollup": "^2.75.7",
+    "rollup-plugin-css-only": "^3.1.0",
+    "uglify-js": "^3.16.1",
+    "uglifycss": "^0.0.29"
+  }
+}

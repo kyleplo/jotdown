@@ -1,0 +1,4 @@
+.jotdown-container:not(.jotdown-readonly) sup {
+  font-size: inherit;
+  vertical-align: unset;
+}

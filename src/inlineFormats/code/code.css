@@ -1,0 +1,4 @@
+.jotdown-container:not(.jotdown-readonly) .jotdown-preview code {
+  font: inherit;
+  opacity: 0.75;
+}

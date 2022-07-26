@@ -1,0 +1,4 @@
+.jotdown-preview .jotdown-hr {
+  text-decoration: line-through;
+  -webkit-text-stroke-width: 1px;
+}

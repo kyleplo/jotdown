@@ -1,0 +1,9 @@
+.jotdown-container:not(.jotdown-readonly) .jotdown-paragraph blockquote {
+  margin: 0;
+  min-height: 1em;
+}
+
+.jotdown-paragraph blockquote strong {
+  font-weight: normal;
+  -webkit-text-stroke-width: 1px;
+}

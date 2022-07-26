@@ -1,0 +1,6 @@
+.jotdown-container:not(.jotdown-readonly) h1, .jotdown-container:not(.jotdown-readonly) h2, .jotdown-container:not(.jotdown-readonly) h3, .jotdown-container:not(.jotdown-readonly) h4, .jotdown-container:not(.jotdown-readonly) h5, .jotdown-container:not(.jotdown-readonly) h6 {
+  font-size: inherit;
+  margin: 0;
+  font-weight: normal;
+  -webkit-text-stroke-width: 1px;
+}

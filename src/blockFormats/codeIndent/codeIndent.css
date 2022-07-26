@@ -1,0 +1,8 @@
+.jotdown-preview code.jotdown-block-code {
+  display: block;
+}
+
+.jotdown-container:not(.jotdown-readonly) .jotdown-preview code.jotdown-block-code {
+  font: inherit;
+  opacity: 0.75;
+}

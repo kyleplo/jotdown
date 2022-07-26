@@ -1,0 +1,15 @@
+.jotdown-preview .jotdown-spoiler {
+  background-color: #7e7e7e;
+}
+
+.jotdown-readonly .jotdown-spoiler {
+  color: #7e7e7e;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.jotdown-readonly .jotdown-spoiler:hover, .jotdown-readonly s.jotdown-spoiler:active {
+  color: inherit;
+  -webkit-user-select: inherit;
+  user-select: inherit;
+}

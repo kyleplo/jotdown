@@ -1,0 +1,5 @@
+.jotdown-container:not(.jotdown-readonly) ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
