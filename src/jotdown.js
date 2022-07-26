@@ -29,7 +29,7 @@ export class JotDown extends EventTarget {
     this._preview.setAttribute("aria-hidden", "true");
     this._container.append(this._preview);
 
-    if(this._config.readonly){
+    if(this._options.readonly){
       this._container.classList.add("jotdown-readonly");
     }else{
       this._editor = document.createElement("TEXTAREA");
