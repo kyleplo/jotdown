@@ -1,5 +1,6 @@
 import "./jotdown.css";
 import { JotDownChangeEvent, JotDownSelectionChangeEvent } from "./events.js"
+import { setImmediate } from "./utils.js"
 
 export * from  "./inlineFormats/all.js"
 export * from "./blockFormats/all.js"
@@ -12,7 +13,7 @@ export class JotDown extends EventTarget {
     this._container.classList.add("jotdown-container");
     container.append(this._container);
 
-    this._container.style.setProperty("--jotdown-text-color", window.getComputedStyle(this._container).color);
+    setImmediate(this._container.style.setProperty("--jotdown-text-color", window.getComputedStyle(this._container).color));
 
     this._options = Object.assign({
       readonly: false,
@@ -26,12 +27,13 @@ export class JotDown extends EventTarget {
 
     this._preview = document.createElement("DIV");
     this._preview.classList.add("jotdown-paragraph", "jotdown-preview");
-    this._preview.setAttribute("aria-hidden", "true");
     this._container.append(this._preview);
 
     if(this._options.readonly){
       this._container.classList.add("jotdown-readonly");
     }else{
+      this._preview.setAttribute("aria-hidden", "true");
+      
       this._editor = document.createElement("TEXTAREA");
       this._editor.classList.add("jotdown-paragraph", "jotdown-editor");
       this._editor.addEventListener("input", () => {
@@ -316,11 +318,11 @@ export class JotDown extends EventTarget {
         const continuation = format.continue(line);
         if(continuation){
           this._editor.setRangeText(continuation, this._editor.selectionEnd, this._editor.selectionEnd);
-          setTimeout(() => {
+          setImmediate(() => {
             this._editor.setRangeText(continuation, this._editor.selectionEnd, this._editor.selectionEnd + continuation.length, "end");
             super.dispatchEvent(new JotDownChangeEvent());
             super.dispatchEvent(new JotDownSelectionChangeEvent());
-          }, 100);
+          });
           return;
         }
       }
