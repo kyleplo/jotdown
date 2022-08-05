@@ -77,6 +77,7 @@ export class JotDown extends EventTarget {
         this._preview.setAttribute("aria-hidden", "true");
         this._container.classList.remove("jotdown-readonly");
       }
+      this._refresh();
     }
   }
 
