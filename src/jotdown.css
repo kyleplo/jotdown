@@ -4,6 +4,7 @@
   height: 100%;
   min-height: 2em;
   overflow: scroll;
+  word-break: break-all;
 }
 
 .jotdown-paragraph {

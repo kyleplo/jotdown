@@ -13,10 +13,13 @@ export class JotDown extends EventTarget {
     this._container.classList.add("jotdown-container");
     container.append(this._container);
 
-    setImmediate(this._container.style.setProperty("--jotdown-text-color", window.getComputedStyle(this._container).color));
+    setImmediate(() => {
+      this._container.style.setProperty("--jotdown-text-color", window.getComputedStyle(this._container).color)
+    });
 
     this._options = Object.assign({
       readonly: false,
+      mayBecomeWritable: true,
       inlineFormats: [],
       blockFormats: [],
       seekMemory: 1000,
@@ -29,11 +32,7 @@ export class JotDown extends EventTarget {
     this._preview.classList.add("jotdown-paragraph", "jotdown-preview");
     this._container.append(this._preview);
 
-    if(this._options.readonly){
-      this._container.classList.add("jotdown-readonly");
-    }else{
-      this._preview.setAttribute("aria-hidden", "true");
-      
+    if(this._options.mayBecomeWritable){
       this._editor = document.createElement("TEXTAREA");
       this._editor.classList.add("jotdown-paragraph", "jotdown-editor");
       this._editor.addEventListener("input", () => {
@@ -52,6 +51,32 @@ export class JotDown extends EventTarget {
           super.dispatchEvent(new JotDownSelectionChangeEvent());
         }
       });
+    }
+
+    if(this._options.readonly){
+      this._editor.setAttribute("readonly", "readonly");
+      this._container.classList.add("jotdown-readonly");
+    }else{
+      this._preview.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  get readonly () {
+    return this._options.readonly;
+  }
+
+  set readonly (newValue) {
+    if(this._options.mayBecomeWritable){
+      this._options.readonly = newValue;
+      if(this._options.readonly){
+        this._editor.setAttribute("readonly", "readonly");
+        this._preview.removeAttribute("aria-hidden");
+        this._container.classList.add("jotdown-readonly");
+      }else{
+        this._editor.removeAttribute("readonly");
+        this._preview.setAttribute("aria-hidden", "true");
+        this._container.classList.remove("jotdown-readonly");
+      }
     }
   }
 
@@ -86,6 +111,10 @@ export class JotDown extends EventTarget {
         if(!successful && this._editor.value.slice(this._editor.selectionStart - bounds[0].length, this._editor.selectionStart) === bounds[0] && this._editor.value.slice(this._editor.selectionEnd, this._editor.selectionEnd + bounds[1].length) === bounds[1]){
           this._editor.setRangeText("", this._editor.selectionStart - bounds[0].length, this._editor.selectionStart);
           this._editor.setRangeText("", this._editor.selectionEnd, this._editor.selectionEnd + bounds[1].length);
+          successful = true;
+        }else if(!successful && this._editor.value.slice(this._editor.selectionStart, this._editor.selectionStart + bounds[0].length) === bounds[0] && this._editor.value.slice(this._editor.selectionEnd - bounds[1], this._editor.selectionEnd) === bounds[1]){
+          this._editor.setRangeText("", this._editor.selectionStart, this._editor.selectionStart + bounds[0].length);
+          this._editor.setRangeText("", this._editor.selectionEnd - bounds[1].length, this._editor.selectionEnd);
           successful = true;
         }
       });
@@ -257,7 +286,7 @@ export class JotDown extends EventTarget {
           const result = format.format(next, chain, this._options);
 
           if(result){
-            if(this._order.map(f => f.name).includes(format.name) && !format.selfClosing){
+            if(this._order.filter(f => f.name === format.name).length % 2 === 1 && !format.selfClosing){
               this._order.push({
                 position: i,
                 type: "end",

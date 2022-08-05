@@ -52,9 +52,10 @@ const value = editor.value;
 
 ## Configuration
 - `readonly` - `Boolean` - Prevents the user from editing the text in the editor - essentially converts into a Markdown viewer - does not prevent the editor from being modified programmatically
+- `mayBecomeWritable` - `Boolean` - Whether a readonly editor should be prepared to become writable - defaults to `true` but can save memory if disabled 
 - `inlineFormats`, `blockFormats` - `Array` - Array of format objects - See Formats section - defaults to empty
 - `seekMemory` - `Number` - Maximum distance in characters between the beginning and end of a format - defaults to 1000 characters
-- `highlight` - `Function` - Function for syntax highlighting - called with two parameters, the code and the language - defaults to `undefined`, see [Elucidate](https://github.com/kyleplo/elucidate)
+- `highlight` - `Function` - Function for syntax highlighting - called with two parameters, the code and the language - defaults to `undefined` -  see [Elucidate](https://github.com/kyleplo/elucidate) for a simple syntax highlighter
 - `linkTarget` - `String` - Value of the `target` attribute to be put on generated links - defaults to `"\_blank"`
 
 ## Formats
