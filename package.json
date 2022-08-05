@@ -1,6 +1,6 @@
 {
   "name": "@kyleplo/jotdown",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Light, minimal markdown editor for the web. Live preview, but not WYSIWYG.",
   "keywords": [
     "markdown",
